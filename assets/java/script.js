@@ -8,11 +8,14 @@ var allowNumbers;
 var allowSpecials;
 var passwordCharacterCount = 12;
 
-var uppercaseChars = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
-var lowercaseChars = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","q","r","s","t","u","v","w","x","y","z"];
-var numberChars = [1,2,3,4,5,6,7,8,9,0];
-var specialChars= ["!","@","#","$","%","&"];
-var allChars= (uppercaseChars) + (lowercaseChars) + (numberChars) + (specialChars);
+var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var lowercaseChars = "abcdefghijklmnoqrstuvwxyz";
+var numberChars = "1234567890";
+var specialChars= "!@#$%&";
+var allChars= uppercaseChars + lowercaseChars + numberChars + specialChars;
+// console.log(allChars);
+
+
 
 function chooseRandomNumber(min, max){
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -48,17 +51,28 @@ function askAboutSpecials(){
 // You can create other functions also if you need them.
 
 function generatePassword(){
-  var finalResult = [];
-  for (var i = 0; i < 1; i++){
-    var randomString = "";
-     passwordCharacterCount;    // ex: 8 characters
-    for( z=1; z< 12; z++ ){
-      var randomIdx = chooseRandomNumber(0, allChars.length -1);
-      var allChar = allChars[randomIdx];
-      randomString += allChar;
-    }
+var allChars= uppercaseChars + lowercaseChars + numberChars + specialChars;
+var randPasswordArray = Array()
+  randPasswordArray[0] = numberChars;
+  randPasswordArray[1] = uppercaseChars;
+  randPasswordArray[2] = lowercaseChars;
+  randPasswordArray[3] = specialChars;
+  randPasswordArray = randPasswordArray.fill(allChars, 4);
+return shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
+};
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  };
+  return array;
+};
+
+console.log(randPasswordArray);
+     
   
-    finalResult.push(randomString);
   
     // HINT: Remember that a for-loop can iterate from a starting number to a ending number, 
     // such as the number of characters in a password.
@@ -72,10 +86,10 @@ function generatePassword(){
     // such as the number of characters in a password.
   
     // HINT: You may want to look into merging arrays together
-  }
-console.log(finalResult)
-  return finalResult;
-}
+//   }
+// console.log(finalResult)
+//   return finalResult;
+// }
 
 // Write password to the #password input
 function writePassword() {
@@ -90,11 +104,13 @@ function writePassword() {
 
 
   var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
+  // var passwordText = document.getElementById("#password");
+  // passwordText.value = password;
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click",writePassword);{
+
+}
 
 
