@@ -8,12 +8,12 @@ var allowNumbers;
 var allowSpecials;
 var passwordCharacterCount = 12;
 
-var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var lowercaseChars = "abcdefghijklmnoqrstuvwxyz";
-var numberChars = "1234567890";
-var specialChars= "!@#$%&";
-var allChars= uppercaseChars + lowercaseChars + numberChars + specialChars;
-// console.log(allChars);
+var uppercaseChars = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+var lowercaseChars = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","q","r","s","t","u","v","w","x","y","z"];
+var numberChars = ["1","2","3","4","5","6","7","8","9","0"];
+var specialChars= ["!","@","#","$","%","&"];
+var allChars= uppercaseChars.concat(lowercaseChars, numberChars, specialChars);
+console.log(allChars);
 
 
 
@@ -24,8 +24,19 @@ function chooseRandomNumber(min, max){
 // Provided by instructor
 function askAboutUppercase(){
   allowUppercase = confirm("Are upper case characters allowed?");
-  console.log(allowUppercase);
-}
+ } if (allowUppercase === false) {
+    allChars.splice(0,26);
+    console.log(allChars);
+  }else { console.log(allowUppercase); 
+    allChars= uppercaseChars.concat(lowercaseChars, numberChars, specialChars);
+  
+  }
+  
+
+
+  
+  
+  
 
 function askAboutLowercase(){
   allowLowerCase= confirm("Are lower case cahracters allowed?");
@@ -50,27 +61,23 @@ function askAboutSpecials(){
 // Once all the criteria are determined, this function will generate the password. 
 // You can create other functions also if you need them.
 
-function generatePassword(){
-var allChars= uppercaseChars + lowercaseChars + numberChars + specialChars;
-var randPasswordArray = Array()
-  randPasswordArray[0] = numberChars;
-  randPasswordArray[1] = uppercaseChars;
-  randPasswordArray[2] = lowercaseChars;
-  randPasswordArray[3] = specialChars;
-  randPasswordArray = randPasswordArray.fill(allChars, 4);
-return shuffleArray(randPasswordArray.map(function(x) { return x[Math.floor(Math.random() * x.length)] })).join('');
-};
-function shuffleArray(array) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  };
-  return array;
+function generatePassword(itemsInArray){
+var finalPassword = [];
+for(var i=1; i<=itemsInArray; i++){
+  var randomString = "";
+  var strLength = chooseRandomNumber(8, 12);
+for(var z=1; z<=strLength; z++){
+  var randomIdx = chooseRandomNumber(0, allChars.length -1);
+  var mixChars = allChars[randomIdx]
+  randomString += mixChars;
+} 
+finalPassword.push(randomString); 
+}
+console.log(finalPassword)
+return finalPassword;
 };
 
-console.log(randPasswordArray);
+// console.log(randPasswordArray);
      
   
   
@@ -102,15 +109,18 @@ function writePassword() {
 
 
 
+  var randomNumber = chooseRandomNumber(1, 1);
+  var password = generatePassword(randomNumber);
+  var passwordText = document.querySelector("#password")
+      passwordText.value = password
 
-  var password = generatePassword();
-  // var passwordText = document.getElementById("#password");
-  // passwordText.value = password;
+  
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click",writePassword);{
 
+
 }
 
-
+  
